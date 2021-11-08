@@ -13,6 +13,7 @@ async function main() {
         const inventory = core.getInput("inventory")
         const vaultPassword = core.getInput("vault_password")
         const knownHosts = core.getInput("known_hosts")
+        const sshConfig = core.getInput("ssh_config")
         const options = core.getInput("options")
         const sudo    = core.getInput("sudo")
         const noColor = core.getInput("no_color")
@@ -74,6 +75,13 @@ async function main() {
             process.env.ANSIBLE_HOST_KEY_CHECKING = "True"
         } else {
             process.env.ANSIBLE_HOST_KEY_CHECKING = "False"
+        }
+
+        if (sshConfig) {
+            const sshConfigFile = ".ansible_ssh_config"
+            fs.writeFileSync(sshConfigFile, sshConfig, { mode: 0600})
+            core.saveState("sshConfigFile", sshConfigFile)
+            cmd.push(`--ssh-common-args="-F ${sshConfigFile}"`)
         }
 
         if (sudo) {

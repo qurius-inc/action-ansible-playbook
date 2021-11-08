@@ -25,6 +25,8 @@ Should work on any OS, if `ansible-playbook` command is available in `PATH`.
       example.com
     # Optional, SSH known hosts file content
     known_hosts: .known_hosts
+    # Optional, SSH config file content
+    ssh_config: .ssh_config
     # Optional, encrypted vault password
     vault_password: ${{secrets.VAULT_PASSWORD}}
     # Optional, galaxy requirements filepath
