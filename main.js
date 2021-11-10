@@ -78,8 +78,9 @@ async function main() {
         }
 
         if (sshConfig) {
+            const sshConfigContent = fs.readFileSync(sshConfig, 'utf8')
             const sshConfigFile = ".ansible_ssh_config"
-            fs.writeFileSync(sshConfigFile, sshConfig, { mode: 0600})
+            fs.writeFileSync(sshConfigFile, sshConfigContent, { mode: 0600})
             core.saveState("sshConfigFile", sshConfigFile)
             cmd.push(`--ssh-common-args="-F ${sshConfigFile}"`)
         }
